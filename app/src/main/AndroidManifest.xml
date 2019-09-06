@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".DocumentationActivity"></activity>
+        <activity android:name=".ScannerViewActivity" />
         <activity android:name=".DonorDatabase" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -18,5 +20,10 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>
