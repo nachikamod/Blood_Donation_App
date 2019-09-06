@@ -4,6 +4,7 @@ package com.blood.jiwandan;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -56,11 +57,20 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         submitTheForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 //Combining the full name
                 String fullName = firstName.getText().toString() + " " + lastName.getText().toString();
                 Toast.makeText(DonorDatabase.this, "" + bloodGroup, Toast.LENGTH_SHORT).show();
+
+                //Important : Make sure to add this dialog box in onSubmit to firebase listener
+                //Check if data is succefully uploaded
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(DonorDatabase.this);
+                View mView = getLayoutInflater().inflate(R.layout.registration_pop_up, null);
+
+                builder.setView(mView);
+                final AlertDialog dialog = builder.create();
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
 
             }
         });
