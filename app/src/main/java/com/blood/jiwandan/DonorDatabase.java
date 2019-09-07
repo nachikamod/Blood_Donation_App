@@ -1,11 +1,13 @@
 package com.blood.jiwandan;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -19,8 +21,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 
 public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
 
@@ -33,10 +43,14 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
     private ArrayAdapter<String> bloodGroupsAdapter;
     private String bloodGroup;
 
+    private DatabaseReference rootRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_database);
+
+        rootRef = FirebaseDatabase.getInstance().getReference().child("donors");
 
         initializeFields();
         editTextFocusListeners();
@@ -61,16 +75,62 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 String fullName = firstName.getText().toString() + " " + lastName.getText().toString();
                 Toast.makeText(DonorDatabase.this, "" + bloodGroup, Toast.LENGTH_SHORT).show();
 
+
+
                 //Important : Make sure to add this dialog box in onSubmit to firebase listener
                 //Check if data is succefully uploaded
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(DonorDatabase.this);
-                View mView = getLayoutInflater().inflate(R.layout.registration_pop_up, null);
 
-                builder.setView(mView);
-                final AlertDialog dialog = builder.create();
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.show();
+
+                /*Initializing contents inside of popup box
+                * Button create = (Button) mView.findViewById(R.id.create);
+                * This is just a reference don't use its
+                * */
+
+                Intent qrScanner = new Intent(DonorDatabase.this, ScannerViewActivity.class);
+                startActivity(qrScanner);
+
+                //Intent testSearch = new Intent(DonorDatabase.this, TestSearchList.class);
+                //startActivity(testSearch);
+
+                HashMap<String, String> pushData = new HashMap<>();
+                pushData.put("name", fullName);
+                pushData.put("contact", mobileNumber.getText().toString());
+                pushData.put("email", emailId.getText().toString());
+                pushData.put("address", address.getText().toString());
+                pushData.put("city", city.getText().toString());
+                pushData.put("pincode", pincode.getText().toString());
+                pushData.put("medicalHistory", medicalHistory.getText().toString());
+                pushData.put("bloodGroup", bloodGroup);
+
+                rootRef.push().setValue(pushData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isComplete()){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DonorDatabase.this);
+                            View mView = getLayoutInflater().inflate(R.layout.registration_pop_up, null);
+
+                            builder.setView(mView);
+                            final AlertDialog dialog = builder.create();
+                            dialog.setCanceledOnTouchOutside(true);
+                            dialog.show();
+
+                            firstName.setText(null);
+                            lastName.setText(null);
+                            mobileNumber.setText(null);
+                            emailId.setText(null);
+                            address.setText(null);
+                            city.setText(null);
+                            pincode.setText(null);
+                            medicalHistory.setText(null);
+
+
+                        }
+                        else {
+                            Toast.makeText(DonorDatabase.this, "Error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
             }
         });
