@@ -34,8 +34,8 @@ import java.util.Hashtable;
 
 public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
 
-    private EditText firstName, lastName, mobileNumber, emailId, address, city, pincode, medicalHistory;
-    private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_address, t_city, t_pincode, t_medicalHistory, dateSetter;
+    private EditText firstName, lastName, mobileNumber, emailId, address, city, pincode, medicalHistory, age;
+    private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_address, t_city, t_pincode, t_medicalHistory, dateSetter, t_age;
     private Button submitTheForm;
     private Spinner bloodGroupList;
     private ImageView calendarButton;
@@ -300,6 +300,19 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 }
             }
         });
+
+        age.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    t_age.setTextColor(Color.parseColor("#2c4054"));
+                }
+
+                else {
+                    t_age.setTextColor(Color.parseColor("#6d727c"));
+                }
+            }
+        });
     }
 
     private void initializeFields() {
@@ -312,6 +325,7 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         city = (EditText) findViewById(R.id.city_input);
         pincode = (EditText) findViewById(R.id.pin_code_input);
         medicalHistory = (EditText) findViewById(R.id.medical_history_input);
+        age = (EditText) findViewById(R.id.age_input);
 
         t_firstName = (TextView) findViewById(R.id.first_name);
         t_lastName = (TextView) findViewById(R.id.last_name);
@@ -321,7 +335,9 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         t_city = (TextView) findViewById(R.id.city);
         t_pincode = (TextView) findViewById(R.id.pin_code);
         t_medicalHistory = (TextView) findViewById(R.id.medical_history);
+        t_age = (TextView) findViewById(R.id.age_text);
         dateSetter = (TextView) findViewById(R.id.date);
+
 
         bloodGroupList = (Spinner) findViewById(R.id.bloodGroups);
 
