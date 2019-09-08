@@ -34,6 +34,7 @@ import java.util.Hashtable;
 
 public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
 
+    public String key;
     private EditText firstName, lastName, mobileNumber, emailId, address, city, pincode, medicalHistory, age;
     private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_address, t_city, t_pincode, t_medicalHistory, dateSetter, t_age;
     private Button submitTheForm;
@@ -87,8 +88,8 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 * This is just a reference don't use its
                 * */
 
-                Intent qrScanner = new Intent(DonorDatabase.this, ScannerViewActivity.class);
-                startActivity(qrScanner);
+                //Intent qrScanner = new Intent(DonorDatabase.this, ScannerViewActivity.class);
+                //startActivity(qrScanner);
 
                 //Intent testSearch = new Intent(DonorDatabase.this, TestSearchList.class);
                 //startActivity(testSearch);
@@ -103,7 +104,9 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 pushData.put("medicalHistory", medicalHistory.getText().toString());
                 pushData.put("bloodGroup", bloodGroup);
 
-                rootRef.push().setValue(pushData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                key=rootRef.push().getKey();
+                //Toast.makeText(DonorDatabase.this, "key is-"+key, Toast.LENGTH_SHORT).show();
+                rootRef.child(key).setValue(pushData).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isComplete()){
@@ -123,6 +126,10 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                             city.setText(null);
                             pincode.setText(null);
                             medicalHistory.setText(null);
+
+                            Intent QRgen=new Intent(DonorDatabase.this,QRcodeGenerationActivity.class);
+                            QRgen.putExtra("key",key);
+                            startActivity(QRgen);
 
 
                         }

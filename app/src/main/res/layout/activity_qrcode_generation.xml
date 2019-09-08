@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QRcodeGenerationActivity"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/QRcode"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/user_qrcode"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="#182E43"
+        android:layout_marginTop="35dp"/>
+    <TextView
+        android:id="@+id/keyParent"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/QRcode"
+        android:text="@string/user_key"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="#182E43"/>
+    <TextView
+        android:id="@+id/key"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/keyParent"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"/>
+
+
+</RelativeLayout>
