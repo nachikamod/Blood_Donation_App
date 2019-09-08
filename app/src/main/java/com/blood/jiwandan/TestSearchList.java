@@ -37,8 +37,6 @@ public class TestSearchList extends AppCompatActivity {
         initializeFields();
 
 
-
-
     }
 
     @Override
