@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 
+import androidmads.library.qrgenearator.QRGEncoder;
+
 public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
 
     public String key;
@@ -45,6 +48,12 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
     private String bloodGroup;
 
     private DatabaseReference rootRef;
+
+
+    public String key_qr;
+    private Bitmap bitmap;
+    private QRGEncoder qrgEncoder;
+    private String TAG= "qr generate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +119,11 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isComplete()){
+
                             AlertDialog.Builder builder = new AlertDialog.Builder(DonorDatabase.this);
                             View mView = getLayoutInflater().inflate(R.layout.registration_pop_up, null);
+
+
 
                             builder.setView(mView);
                             final AlertDialog dialog = builder.create();
@@ -127,9 +139,13 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                             pincode.setText(null);
                             medicalHistory.setText(null);
 
+
+
+
                             Intent QRgen=new Intent(DonorDatabase.this,QRcodeGenerationActivity.class);
                             QRgen.putExtra("key",key);
                             startActivity(QRgen);
+
 
 
                         }

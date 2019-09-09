@@ -30,11 +30,15 @@ public class QRcodeGenerationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_generation);
-        Intent KeyRecive= getIntent();
-        Key=getIntent().getExtras().get("key").toString().trim();
-        key=(TextView)findViewById(R.id.key);
-        QRcode=(ImageView)findViewById(R.id.QRcode);
+
+        Intent KeyRecive = getIntent();
+
+        Key = getIntent().getExtras().get("key").toString().trim();
+
+        initializeFields();
+
         key.setText(Key);
+
         if (Key.length()>0){
             WindowManager manager=(WindowManager)getSystemService(WINDOW_SERVICE);
             Display QR=manager.getDefaultDisplay();
@@ -55,6 +59,13 @@ public class QRcodeGenerationActivity extends AppCompatActivity {
 
 
         }
+
+    }
+
+    private void initializeFields() {
+
+        key=(TextView)findViewById(R.id.key);
+        QRcode=(ImageView)findViewById(R.id.QRcode);
 
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_centerInParent="true"
     android:layout_width="wrap_content" android:layout_height="wrap_content">
 
@@ -12,11 +13,47 @@
 
 
         <TextView
+            android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:id="@+id/textView2"
+            android:id="@+id/pop_up_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Congratulations Registration is complete"/>
+            android:text="REGISTRATION IS COMPLETE"/>
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/QRcode"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/pop_up_header"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:text="USER KEY"
+            android:id="@+id/qr_header"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/QRcode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/key"
+            android:textColor="@color/white"
+            android:text="keyHere"
+            android:layout_below="@+id/qr_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true">
+
+        </TextView>
 
     </RelativeLayout>
 
