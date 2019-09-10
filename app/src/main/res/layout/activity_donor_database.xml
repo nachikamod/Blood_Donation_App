@@ -390,6 +390,8 @@
         android:layout_height="match_parent"
         app:menu="@menu/navigation_menu"
         android:layout_gravity="start"
+        android:background="@color/colorAccent"
+        app:itemTextColor="@color/white"
         >
 
     </com.google.android.material.navigation.NavigationView>

@@ -4,6 +4,13 @@
 
     <item android:id="@+id/nav_account_login"
         android:title="Hospital Account"
+        android:icon="@drawable/login"
+        app:showAsAction="never">
+    </item>
+
+    <item android:id="@+id/nav_new_donor"
+        android:title="New Donor"
+        android:icon="@drawable/qr_code"
         app:showAsAction="never">
     </item>
 

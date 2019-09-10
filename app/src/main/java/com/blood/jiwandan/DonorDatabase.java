@@ -442,23 +442,5 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         dateSetter.setText(currentDateString);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
 
-        getMenuInflater().inflate(R.menu.navigation_menu, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        super.onOptionsItemSelected(item);
-
-        if (item.getItemId() == R.id.nav_account_login){
-
-        }
-
-        return true;
-    }
 }
