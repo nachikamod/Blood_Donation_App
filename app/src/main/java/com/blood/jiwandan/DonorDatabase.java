@@ -46,7 +46,7 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
     public String key;
     private EditText firstName, lastName, mobileNumber, emailId, address, city, pincode, medicalHistory, age;
     private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_address, t_city, t_pincode, t_medicalHistory, dateSetter, t_age, t_key, t_cancel;
-    private Button submitTheForm;
+    private Button submitTheForm, newDonor, existingDonor;
     private Spinner bloodGroupList;
     private ImageView calendarButton;
     private static final String[] groups = {"", "O +VE", "A +VE", "B +VE", "AB +VE","O -VE", "A -VE", "B -VE", "AB -VE"};
@@ -81,6 +81,43 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         });
 
         formSubmission();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        AlertDialog.Builder userDialogue = new AlertDialog.Builder(DonorDatabase.this);
+        View dialogueView = getLayoutInflater().inflate(R.layout.user_check_pop_up, null);
+
+        userDialogue.setView(dialogueView);
+        final AlertDialog newDialog = userDialogue.create();
+        newDialog.setCanceledOnTouchOutside(false);
+        newDialog.show();
+
+        newDonor = (Button) dialogueView.findViewById(R.id.new_user);
+        existingDonor = (Button) dialogueView.findViewById(R.id.existing_user);
+
+        newDonor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent scannerActivity = new Intent(DonorDatabase.this, ScannerViewActivity.class);
+                startActivity(scannerActivity);
+
+            }
+        });
+
+        existingDonor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                newDialog.dismiss();
+
+            }
+        });
+
+
     }
 
     private void formSubmission() {
