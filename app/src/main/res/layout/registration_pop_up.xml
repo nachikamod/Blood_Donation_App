@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_centerInParent="true"
     android:layout_width="wrap_content" android:layout_height="wrap_content">
 
@@ -54,6 +55,30 @@
             android:layout_centerHorizontal="true">
 
         </TextView>
+
+        <RelativeLayout
+            android:layout_below="@+id/key"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            tools:ignore="UnusedAttribute">
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                android:text="Cancel"
+                android:id="@+id/cancel_pop_up"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true">
+
+            </TextView>
+
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
 

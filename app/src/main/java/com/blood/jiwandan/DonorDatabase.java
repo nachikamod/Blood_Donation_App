@@ -1,6 +1,5 @@
 package com.blood.jiwandan;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -10,8 +9,12 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,20 +29,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.WriterException;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
 
+
+import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
 
     public String key;
     private EditText firstName, lastName, mobileNumber, emailId, address, city, pincode, medicalHistory, age;
-    private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_address, t_city, t_pincode, t_medicalHistory, dateSetter, t_age;
+    private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_address, t_city, t_pincode, t_medicalHistory, dateSetter, t_age, t_key, t_cancel;
     private Button submitTheForm;
     private Spinner bloodGroupList;
     private ImageView calendarButton;
@@ -49,11 +53,12 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
     private DatabaseReference rootRef;
 
+    private View mView;
+    private AlertDialog.Builder builder;
 
-    public String key_qr;
     private Bitmap bitmap;
     private QRGEncoder qrgEncoder;
-    private String TAG= "qr generate";
+    private ImageView QRcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,27 +86,14 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         submitTheForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 //Combining the full name
                 String fullName = firstName.getText().toString() + " " + lastName.getText().toString();
                 Toast.makeText(DonorDatabase.this, "" + bloodGroup, Toast.LENGTH_SHORT).show();
 
+                builder = new AlertDialog.Builder(DonorDatabase.this);
+                mView = getLayoutInflater().inflate(R.layout.registration_pop_up, null);
 
-
-                //Important : Make sure to add this dialog box in onSubmit to firebase listener
-                //Check if data is succefully uploaded
-
-
-
-                /*Initializing contents inside of popup box
-                * Button create = (Button) mView.findViewById(R.id.create);
-                * This is just a reference don't use its
-                * */
-
-                //Intent qrScanner = new Intent(DonorDatabase.this, ScannerViewActivity.class);
-                //startActivity(qrScanner);
-
-                //Intent testSearch = new Intent(DonorDatabase.this, TestSearchList.class);
-                //startActivity(testSearch);
 
                 HashMap<String, String> pushData = new HashMap<>();
                 pushData.put("name", fullName);
@@ -113,21 +105,25 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 pushData.put("medicalHistory", medicalHistory.getText().toString());
                 pushData.put("bloodGroup", bloodGroup);
 
-                key=rootRef.push().getKey();
+                key = rootRef.push().getKey();
                 //Toast.makeText(DonorDatabase.this, "key is-"+key, Toast.LENGTH_SHORT).show();
                 rootRef.child(key).setValue(pushData).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isComplete()){
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DonorDatabase.this);
-                            View mView = getLayoutInflater().inflate(R.layout.registration_pop_up, null);
+                            //Initialization of custom pop up fields
 
+                            t_key = (TextView) mView.findViewById(R.id.key);
+                            t_cancel = (TextView) mView.findViewById(R.id.cancel_pop_up);
 
+                            QRcode = (ImageView) mView.findViewById(R.id.QRcode);
+
+                            //Custom alert Dialogue initialization
 
                             builder.setView(mView);
                             final AlertDialog dialog = builder.create();
-                            dialog.setCanceledOnTouchOutside(true);
+                            dialog.setCanceledOnTouchOutside(false);
                             dialog.show();
 
                             firstName.setText(null);
@@ -140,12 +136,39 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                             medicalHistory.setText(null);
 
 
+                            t_key.setText(key);
 
 
-                            Intent QRgen=new Intent(DonorDatabase.this,QRcodeGenerationActivity.class);
-                            QRgen.putExtra("key",key);
-                            startActivity(QRgen);
+                            //QR Generation
 
+
+                            if (key.length() > 0){
+                                WindowManager manager=(WindowManager)getSystemService(WINDOW_SERVICE);
+                                Display QR = manager.getDefaultDisplay();
+                                Point point = new Point();
+                                QR.getSize(point);
+                                int width = point.x;
+                                int height = point.y;
+                                int smallDimention = width < height ? width : height;
+                                smallDimention = smallDimention * 3 / 4;
+                                qrgEncoder = new QRGEncoder(key,null, QRGContents.Type.TEXT,smallDimention);
+                                try {
+                                    bitmap = qrgEncoder.encodeAsBitmap();
+                                    QRcode.setImageBitmap(bitmap);
+                                }
+                                catch (WriterException e){
+                                    Toast.makeText(DonorDatabase.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+
+                            t_cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+                                }
+                            });
 
 
                         }
