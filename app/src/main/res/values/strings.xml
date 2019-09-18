@@ -13,6 +13,39 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="state">
+        <item>Maharashtra</item>
+    </string-array>
+
+    <string-array name="city_maharashtra">
+        <item>Pune</item>
+        <item>Nashik</item>
+    </string-array>
+
+    <string-array name="area_pune">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+        <item>Pluto</item>
+    </string-array>
+
+    <string-array name="blood_groups">
+        <item>O +VE</item>
+        <item>A +VE</item>
+        <item>B +VE</item>
+        <item>AB +VE</item>
+        <item>O -VE</item>
+        <item>A -VE</item>
+        <item>B -VE</item>
+        <item>AB -VE</item>
+        <item>Other</item>
+    </string-array>
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -21,4 +54,5 @@
     <string name="menu_send">Send</string>
     <string name="user_key">User key-</string>
     <string name="user_qrcode">User QRcode</string>
+    <string name="birth_date">Birth Date</string>
 </resources>

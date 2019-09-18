@@ -43,15 +43,13 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
 
-    public String key;
-    private EditText firstName, lastName, mobileNumber, emailId, address, city, pincode, medicalHistory, age;
-    private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_address, t_city, t_pincode, t_medicalHistory, dateSetter, t_age, t_key, t_cancel;
+    public String key, area;
+    private EditText firstName, lastName, mobileNumber, emailId, medicalHistory;
+    private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_medicalHistory, dateSetter, t_key, t_cancel, b_daySetter;
     private Button submitTheForm, newDonor, existingDonor;
     private Spinner bloodGroupList;
-    private ImageView calendarButton;
-    private static final String[] groups = {"", "O +VE", "A +VE", "B +VE", "AB +VE","O -VE", "A -VE", "B -VE", "AB -VE"};
-    private ArrayAdapter<String> bloodGroupsAdapter;
-    private String bloodGroup;
+    private ImageView calendarButton, age;
+    private String bloodGroup, flag, currAgeString, lastDonation, bDaySetter;
 
     private DatabaseReference rootRef;
 
@@ -71,12 +69,25 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
         initializeFields();
         editTextFocusListeners();
-        dropDownList();
+        spinnerInitializer();
 
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 calendarView();
+                flag = "0";
+
+            }
+        });
+
+        age.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                bDay_calendarView();
+                flag = "1";
+
             }
         });
 
@@ -102,8 +113,7 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
 
-                Intent scannerActivity = new Intent(DonorDatabase.this, ScannerViewActivity.class);
-                startActivity(scannerActivity);
+                newDialog.dismiss();
 
             }
         });
@@ -112,11 +122,11 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
 
-                newDialog.dismiss();
+                Intent scannerActivity = new Intent(DonorDatabase.this, ScannerViewActivity.class);
+                startActivity(scannerActivity);
 
             }
         });
-
 
     }
 
@@ -133,16 +143,21 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 builder = new AlertDialog.Builder(DonorDatabase.this);
                 mView = getLayoutInflater().inflate(R.layout.registration_pop_up, null);
 
-
                 HashMap<String, String> pushData = new HashMap<>();
-                pushData.put("name", fullName);
+
+                //Capitalize the name
+                //So while searching no name search error like capitalization or small letters wont happen
+
+                pushData.put("name", fullName.toUpperCase());
                 pushData.put("contact", mobileNumber.getText().toString());
                 pushData.put("email", emailId.getText().toString());
-                pushData.put("address", address.getText().toString());
-                pushData.put("city", city.getText().toString());
-                pushData.put("pincode", pincode.getText().toString());
-                pushData.put("medicalHistory", medicalHistory.getText().toString());
+                pushData.put("area", area);
+                pushData.put("city", null);
                 pushData.put("bloodGroup", bloodGroup);
+                pushData.put("bDay", bDaySetter);
+                pushData.put("age", currAgeString);
+                pushData.put("medicalHistory", medicalHistory.getText().toString().toUpperCase());
+                pushData.put("lastDonation", lastDonation);
 
                 key = rootRef.push().getKey();
                 //Toast.makeText(DonorDatabase.this, "key is-"+key, Toast.LENGTH_SHORT).show();
@@ -169,17 +184,11 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                             lastName.setText(null);
                             mobileNumber.setText(null);
                             emailId.setText(null);
-                            address.setText(null);
-                            city.setText(null);
-                            pincode.setText(null);
                             medicalHistory.setText(null);
-
 
                             t_key.setText(key);
 
-
                             //QR Generation
-
 
                             if (key.length() > 0){
                                 WindowManager manager=(WindowManager)getSystemService(WINDOW_SERVICE);
@@ -199,16 +208,16 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                                     Toast.makeText(DonorDatabase.this, e.toString(), Toast.LENGTH_SHORT).show();
                                 }
 
-
                             }
 
                             t_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     dialog.dismiss();
+                                    Intent testSearch = new Intent(DonorDatabase.this, TestSearchList.class);
+                                    startActivity(testSearch);
                                 }
                             });
-
 
                         }
                         else {
@@ -222,6 +231,13 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+    private void bDay_calendarView() {
+
+        DialogFragment datePicker  = new datePickerDialog();
+        datePicker.show(getSupportFragmentManager(), "date picker");
+
+    }
+
     private void calendarView() {
 
         DialogFragment datePicker = new datePickerDialog();
@@ -229,54 +245,38 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-    private void dropDownList() {
-
-        bloodGroupsAdapter = new ArrayAdapter<String>(DonorDatabase.this, android.R.layout.simple_spinner_item,groups);
-        bloodGroupsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bloodGroupList.setAdapter(bloodGroupsAdapter);
-        bloodGroupList.setOnItemSelectedListener(this);
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-        switch (position) {
-            case 0:
-                //Keep it null
-                break;
-            case 1:
-                bloodGroup = "0 +VE";
-                break;
-            case 2:
-                bloodGroup = "A +VE";
-                break;
-            case 3:
-                bloodGroup = "B +VE";
-                break;
-            case 4:
-                bloodGroup = "AB +VE";
-                break;
-            case 5:
-                bloodGroup = "O -VE";
-                break;
-            case 6:
-                bloodGroup = "A -VE";
-                break;
-            case 7:
-                bloodGroup = "B -VE";
-                break;
-            case 8:
-                bloodGroup = "AB -VE";
-                break;
+        if (parent.getId() == R.id.blood_group_spinner) {
 
+            bloodGroup = parent.getItemAtPosition(position).toString();
+            Toast.makeText(this, bloodGroup, Toast.LENGTH_SHORT).show();
 
         }
+
+        else if (parent.getId() == R.id.state_spinner) {
+
+            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        else if (parent.getId() == R.id.city_spinner)  {
+
+            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+
+        }
+        
+        else if (parent.getId() == R.id.area_spinner) {
+
+            area = parent.getItemAtPosition(position).toString();
+
+        }
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        // TODO Auto-generated method stub
-        Toast.makeText(this, "Nothing is selected", Toast.LENGTH_SHORT).show();
     }
 
     private void editTextFocusListeners() {
@@ -333,46 +333,6 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-
-        address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    t_address.setTextColor(Color.parseColor("#2c4054"));
-                }
-
-                else {
-                    t_address.setTextColor(Color.parseColor("#6d727c"));
-                }
-            }
-        });
-
-        city.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    t_city.setTextColor(Color.parseColor("#2c4054"));
-                }
-
-                else {
-                    t_city.setTextColor(Color.parseColor("#6d727c"));
-                }
-            }
-        });
-
-        pincode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    t_pincode.setTextColor(Color.parseColor("#2c4054"));
-                }
-
-                else {
-                    t_pincode.setTextColor(Color.parseColor("#6d727c"));
-                }
-            }
-        });
-
         medicalHistory.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -386,18 +346,6 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-        age.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    t_age.setTextColor(Color.parseColor("#2c4054"));
-                }
-
-                else {
-                    t_age.setTextColor(Color.parseColor("#6d727c"));
-                }
-            }
-        });
     }
 
     private void initializeFields() {
@@ -406,29 +354,36 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         lastName = (EditText) findViewById(R.id.last_name_input);
         mobileNumber = (EditText) findViewById(R.id.mobile_number_input);
         emailId = (EditText) findViewById(R.id.email_input);
-        address = (EditText) findViewById(R.id.address_input);
-        city = (EditText) findViewById(R.id.city_input);
-        pincode = (EditText) findViewById(R.id.pin_code_input);
         medicalHistory = (EditText) findViewById(R.id.medical_history_input);
-        age = (EditText) findViewById(R.id.age_input);
 
         t_firstName = (TextView) findViewById(R.id.first_name);
         t_lastName = (TextView) findViewById(R.id.last_name);
         t_mobileNumber = (TextView) findViewById(R.id.mobile_number);
         t_emailId = (TextView) findViewById(R.id.email_id);
-        t_address = (TextView) findViewById(R.id.address);
-        t_city = (TextView) findViewById(R.id.city);
-        t_pincode = (TextView) findViewById(R.id.pin_code);
         t_medicalHistory = (TextView) findViewById(R.id.medical_history);
-        t_age = (TextView) findViewById(R.id.age_text);
         dateSetter = (TextView) findViewById(R.id.date);
-
-
-        bloodGroupList = (Spinner) findViewById(R.id.bloodGroups);
+        b_daySetter = (TextView) findViewById(R.id.birth_date_holder);
 
         calendarButton = (ImageView) findViewById(R.id.calendar);
+        age = (ImageView) findViewById(R.id.calendar_b_day);
 
         submitTheForm = (Button) findViewById(R.id.submit);
+
+    }
+
+    private void spinnerInitializer() {
+
+        Spinner stateSpinner = (Spinner) findViewById(R.id.state_spinner);
+        stateSpinner.setOnItemSelectedListener(this);
+
+        Spinner citySpinner = (Spinner) findViewById(R.id.city_spinner);
+        citySpinner.setOnItemSelectedListener(this);
+
+        Spinner areaSpinner = (Spinner) findViewById(R.id.area_spinner);
+        areaSpinner.setOnItemSelectedListener(this);
+
+        Spinner bloodGroupSpinner = (Spinner) findViewById(R.id.blood_group_spinner);
+        bloodGroupSpinner.setOnItemSelectedListener(this);
 
     }
 
@@ -438,9 +393,19 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance().format(c.getTime());
-        dateSetter.setText(currentDateString);
-    }
 
+        if (flag.equals("0")) {
+            lastDonation = DateFormat.getDateInstance().format(c.getTime());
+            dateSetter.setText(lastDonation);
+        }
+        else {
+            bDaySetter = DateFormat.getDateInstance().format(c.getTime());
+            b_daySetter.setText(bDaySetter);
+            int currentAge = Calendar.getInstance().get(Calendar.YEAR) - year;
+            currAgeString = Integer.toString(currentAge);
+            Toast.makeText(this, "" + currAgeString, Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 }

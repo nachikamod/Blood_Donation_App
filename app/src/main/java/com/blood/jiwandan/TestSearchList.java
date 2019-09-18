@@ -61,7 +61,7 @@ public class TestSearchList extends AppCompatActivity {
 
         donorsRef = FirebaseDatabase.getInstance().getReference().child("donors");
 
-        Query firebaseSearchQuery = donorsRef.orderByChild("city").startAt(search).endAt(search + "\uf8ff");
+        Query firebaseSearchQuery = donorsRef.orderByChild("querry1").startAt(search).endAt(search + "\uf8ff");
 
         FirebaseRecyclerOptions<Donors> options =
                 new FirebaseRecyclerOptions.Builder<Donors>()

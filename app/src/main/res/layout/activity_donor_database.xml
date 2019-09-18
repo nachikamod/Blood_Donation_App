@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DonorDatabase">
 
-
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -69,7 +68,6 @@
                             android:inputType="textPersonName"
                             android:hint="@string/first_name" />
 
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -103,7 +101,6 @@
                             android:hint="@string/last_name" />
 
                     </RelativeLayout>
-
 
                 </RelativeLayout>
 
@@ -150,7 +147,6 @@
                         android:hint="Email"
                         android:inputType="textEmailAddress" />
 
-
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -163,89 +159,58 @@
                     android:layout_marginTop="2dp">
 
                     <TextView
-                        android:id="@+id/address"
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="State"
+                        android:textColor="#6d727c"/>
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:layout_below="@+id/state"
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/state_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/state"
+                        app:hintText="State"/>
+
+                    <TextView
+                        android:layout_below="@+id/state_spinner"
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textColor="#6d727c"
+                        />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:layout_below="@+id/city"
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/city_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/city_maharashtra"
+                        app:hintText="City"/>
+
+                    <TextView
+                        android:layout_below="@+id/city_spinner"
+                        android:id="@+id/area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Address"
+                        android:text="Area"
                         android:textColor="#6d727c"
                         android:layout_marginTop="2dp"/>
 
-                    <EditText
-                        android:layout_below="@+id/address"
-                        android:id="@+id/address_input"
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/area_spinner"
+                        android:layout_below="@+id/area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="textMultiLine"
-                        android:hint="Full Address"/>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/address_input"
-                        android:layout_marginTop="2dp">
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/address_middle_reference">
-
-                            <TextView
-                                android:id="@+id/city"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="City"
-                                android:textColor="#6d727c"
-                                />
-
-                            <EditText
-                                android:layout_below="@+id/city"
-                                android:id="@+id/city_input"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ems="10"
-                                android:inputType="textPersonName"
-                                android:hint="City Name" />
-
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/address_middle_reference"
-                            android:layout_width="0dp"
-                            android:layout_height="5dp"
-                            android:layout_centerHorizontal="true"/>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/address_middle_reference">
-
-                            <TextView
-                                android:id="@+id/pin_code"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Pincode"
-                                android:textColor="#6d727c"/>
-
-                            <EditText
-                                android:layout_below="@+id/pin_code"
-                                android:id="@+id/pin_code_input"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ems="10"
-                                android:inputType="textPersonName"
-                                android:hint="Pin Code" />
-
-
-                        </RelativeLayout>
-
-
-
-                    </RelativeLayout>
-
-
+                        android:entries="@array/area_pune"
+                        app:hintText="Area"/>
 
                 </RelativeLayout>
 
@@ -266,12 +231,14 @@
                         android:textColor="#6d727c"
                         android:layout_marginTop="2dp"/>
 
-                    <Spinner
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:layout_marginTop="2dp"
+                        android:id="@+id/blood_group_spinner"
                         android:layout_below="@+id/t_bloodGroup"
-                        android:id="@+id/bloodGroups"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:entries="@array/blood_groups"
+                        app:hintText="Blood Groups"/>
 
                 </RelativeLayout>
 
@@ -280,7 +247,7 @@
                     android:background="@drawable/custom_form_fields"
                     android:padding="10dp"
                     android:layout_marginTop="2dp"
-                    android:id="@+id/age"
+                    android:id="@+id/birth_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -288,25 +255,39 @@
                         android:id="@+id/age_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Age"
+                        android:text="@string/birth_date"
                         android:textColor="#6d727c"
                         android:layout_marginTop="2dp"/>
 
-                    <EditText
+                    <TextView
                         android:layout_below="@+id/age_text"
-                        android:id="@+id/age_input"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="number"
-                        android:hint="Age"
-                        android:layout_width="match_parent"
+                        android:id="@+id/birth_date_holder"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        />
+                        android:text="@string/birth_date"
+                        android:textColor="#6d727c"
+                        android:layout_marginTop="2dp"
+                        android:textSize="30sp"/>
+
+                    <ImageView
+                        android:id="@+id/calendar_b_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:srcCompat="@drawable/ic_calendar"
+                        tools:ignore="VectorDrawableCompat" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_below="@id/age"
+                    android:layout_below="@id/birth_date"
                     android:id="@+id/disease_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -331,7 +312,6 @@
                         android:gravity="start|top"
                         android:inputType="textMultiLine"
                         android:hint="Write an paragraph"/>
-
 
                     <TextView
                         android:layout_below="@+id/medical_history_input"
@@ -364,7 +344,8 @@
                         android:layout_marginBottom="5dp"
                         android:clickable="true"
                         android:focusable="true"
-                        app:srcCompat="@drawable/calendar" />
+                        app:srcCompat="@drawable/ic_calendar"
+                        tools:ignore="VectorDrawableCompat" />
 
 
                 </RelativeLayout>
@@ -395,6 +376,5 @@
         >
 
     </com.google.android.material.navigation.NavigationView>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
