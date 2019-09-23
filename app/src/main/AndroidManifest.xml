@@ -12,11 +12,11 @@
         <activity android:name=".TestSearchList" />
         <activity android:name=".DocumentationActivity" />
         <activity android:name=".ScannerViewActivity" />
-        <activity android:name=".DonorDatabase" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".DonorDatabase"/>
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

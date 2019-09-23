@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -23,19 +25,24 @@ import com.google.firebase.database.Query;
 public class TestSearchList extends AppCompatActivity {
 
     private EditText searchField;
-    private Button mSearchBtn;
+    private ImageView mImageView;
 
     private RecyclerView mResultList;
 
     private DatabaseReference donorsRef;
+
+    private Query querry1;
+
+    private String searchedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_search_list);
 
-        initializeFields();
+        donorsRef = FirebaseDatabase.getInstance().getReference().child("donors");
 
+        initializeFields();
 
     }
 
@@ -43,12 +50,42 @@ public class TestSearchList extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        if (searchedText == null) {
 
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+            FirebaseRecyclerOptions<Donors> options =
+                    new FirebaseRecyclerOptions.Builder<Donors>()
+                            .setQuery(donorsRef, Donors.class)
+                            .build();
+            FirebaseRecyclerAdapter<Donors, DonorsViewHolder> adapter =
+                    new FirebaseRecyclerAdapter<Donors, DonorsViewHolder>(options) {
+                        @Override
+                        protected void onBindViewHolder(@NonNull final DonorsViewHolder holder, final int position, @NonNull final Donors model) {
+
+                            holder.donorName.setText(model.getName());
+                            holder.donorBloodGroup.setText(model.getBloodGroup());
+                            holder.donorCity.setText(model.getCity());
+
+                        }
+
+                        @NonNull
+                        @Override
+                        public DonorsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_list_layout_search, viewGroup, false);
+                            DonorsViewHolder viewHolder = new DonorsViewHolder(view);
+                            return viewHolder;
+                        }
+                    };
+
+            mResultList.setAdapter(adapter);
+            adapter.startListening();
+
+        }
+
+        mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String searchedText = searchField.getText().toString();
+                searchedText = searchField.getText().toString();
                 firebaseDonorSearch(searchedText);
 
             }
@@ -58,14 +95,12 @@ public class TestSearchList extends AppCompatActivity {
 
     private void firebaseDonorSearch(String search) {
 
+        querry1 = donorsRef.orderByChild("querry1").startAt(search).endAt(search + "\uf8ff");
 
-        donorsRef = FirebaseDatabase.getInstance().getReference().child("donors");
-
-        Query firebaseSearchQuery = donorsRef.orderByChild("querry1").startAt(search).endAt(search + "\uf8ff");
 
         FirebaseRecyclerOptions<Donors> options =
                 new FirebaseRecyclerOptions.Builder<Donors>()
-                        .setQuery(firebaseSearchQuery, Donors.class)
+                        .setQuery(querry1, Donors.class)
                         .build();
         FirebaseRecyclerAdapter<Donors, DonorsViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Donors, DonorsViewHolder>(options) {
@@ -95,7 +130,8 @@ public class TestSearchList extends AppCompatActivity {
     private void initializeFields() {
 
         searchField = (EditText) findViewById(R.id.search);
-        mSearchBtn = (Button) findViewById(R.id.searchClick);
+
+        mImageView = (ImageView) findViewById(R.id.searchClick);
 
         mResultList = (RecyclerView) findViewById(R.id.testRecycler);
         mResultList.setHasFixedSize(true);

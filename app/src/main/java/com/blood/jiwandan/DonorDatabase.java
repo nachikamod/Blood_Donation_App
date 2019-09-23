@@ -1,7 +1,10 @@
 package com.blood.jiwandan;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
@@ -29,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.WriterException;
@@ -36,20 +40,22 @@ import com.google.zxing.WriterException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
+public class DonorDatabase extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, NavigationView.OnNavigationItemSelectedListener {
 
-    public String key, area;
+    public String key, area, city, state;
     private EditText firstName, lastName, mobileNumber, emailId, medicalHistory;
     private TextView t_firstName, t_lastName, t_mobileNumber, t_emailId, t_medicalHistory, dateSetter, t_key, t_cancel, b_daySetter;
     private Button submitTheForm, newDonor, existingDonor;
-    private Spinner bloodGroupList;
     private ImageView calendarButton, age;
     private String bloodGroup, flag, currAgeString, lastDonation, bDaySetter;
+
+    private NavigationView navigationView;
 
     private DatabaseReference rootRef;
 
@@ -59,6 +65,9 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
     private Bitmap bitmap;
     private QRGEncoder qrgEncoder;
     private ImageView QRcode;
+
+    private DrawerLayout drawerContainer;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +101,7 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         });
 
         formSubmission();
+        navContainerToggler();
     }
 
     @Override
@@ -151,13 +161,19 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 pushData.put("name", fullName.toUpperCase());
                 pushData.put("contact", mobileNumber.getText().toString());
                 pushData.put("email", emailId.getText().toString());
+                pushData.put("state", state.toUpperCase());
+                pushData.put("city", city.toUpperCase());
                 pushData.put("area", area);
-                pushData.put("city", null);
                 pushData.put("bloodGroup", bloodGroup);
                 pushData.put("bDay", bDaySetter);
                 pushData.put("age", currAgeString);
                 pushData.put("medicalHistory", medicalHistory.getText().toString().toUpperCase());
                 pushData.put("lastDonation", lastDonation);
+
+                pushData.put("query_1", state + "_" + city + "_" + area);
+                pushData.put("query_2", state + "_" + city);
+                pushData.put("query_3", state + "_" + city + "_" + area + "_" + bloodGroup);
+                pushData.put("query_4", );
 
                 key = rootRef.push().getKey();
                 //Toast.makeText(DonorDatabase.this, "key is-"+key, Toast.LENGTH_SHORT).show();
@@ -257,13 +273,13 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
         else if (parent.getId() == R.id.state_spinner) {
 
-            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+            state = parent.getItemAtPosition(position).toString();
 
         }
 
         else if (parent.getId() == R.id.city_spinner)  {
 
-            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+            city = parent.getItemAtPosition(position).toString();
 
         }
         
@@ -278,6 +294,18 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     private void editTextFocusListeners() {
 
@@ -348,6 +376,16 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+    private void navContainerToggler() {
+
+        mToggle = new ActionBarDrawerToggle(this, drawerContainer, R.string.open, R.string.close);
+
+        drawerContainer.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     private void initializeFields() {
 
         firstName = (EditText) findViewById(R.id.first_name_input);
@@ -368,6 +406,11 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         age = (ImageView) findViewById(R.id.calendar_b_day);
 
         submitTheForm = (Button) findViewById(R.id.submit);
+
+        drawerContainer = (DrawerLayout) findViewById(R.id.drawer_container);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_container);
+        navigationView.setNavigationItemSelectedListener(this);
 
     }
 
@@ -408,4 +451,24 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.nav_account_login:{
+                Intent test = new Intent(DonorDatabase.this, TestSearchList.class);
+                startActivity(test);
+                break;
+            }
+            case R.id.nav_registered_donor:{
+                Intent Scanner  = new Intent(DonorDatabase.this, ScannerViewActivity.class);
+                startActivity(Scanner);
+                break;
+            }
+
+        }
+        drawerContainer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
