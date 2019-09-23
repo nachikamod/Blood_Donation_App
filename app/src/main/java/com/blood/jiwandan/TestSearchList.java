@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,13 +19,14 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class TestSearchList extends AppCompatActivity {
+public class TestSearchList extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private EditText searchField;
     private ImageView mImageView;
@@ -36,10 +38,11 @@ public class TestSearchList extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-
     private Query querry1;
 
     private String searchedText;
+
+    private BottomNavigationView bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,6 @@ public class TestSearchList extends AppCompatActivity {
         donorsRef = FirebaseDatabase.getInstance().getReference().child("donors");
 
         initializeFields();
-
-
 
     }
 
@@ -130,7 +131,7 @@ public class TestSearchList extends AppCompatActivity {
 
     private void firebaseDonorSearch(String search) {
 
-        querry1 = donorsRef.orderByChild("querry1").startAt(search).endAt(search + "\uf8ff");
+        querry1 = donorsRef.orderByChild("query_6").startAt(search).endAt(search + "\uf8ff");
 
 
         FirebaseRecyclerOptions<Donors> options =
@@ -176,6 +177,25 @@ public class TestSearchList extends AppCompatActivity {
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
+        bottomBar = (BottomNavigationView) findViewById(R.id.bottom_nav_bar);
+        bottomBar.setOnNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.nav_home:{
+                Intent home = new Intent(TestSearchList.this, DonorDatabase.class);
+                startActivity(home);
+                return true;
+            }
+            case  R.id.nav_filter:{
+
+            }
+
+        }
+        return true;
     }
 
     public class DonorsViewHolder extends RecyclerView.ViewHolder{

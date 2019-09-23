@@ -467,8 +467,8 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         switch (item.getItemId()) {
 
             case R.id.nav_account_login:{
-                //Intent test = new Intent(DonorDatabase.this, logInActivity.class);
-                //startActivity(test);
+                Intent searchList = new Intent(DonorDatabase.this, TestSearchList.class);
+                startActivity(searchList);
                 break;
             }
             case R.id.nav_registered_donor:{

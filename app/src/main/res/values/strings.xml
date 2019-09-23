@@ -26,15 +26,102 @@
     </string-array>
 
     <string-array name="area_pune">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-        <item>Pluto</item>
+        <item>Alandi Road</item>
+        <item>Ambegaon Budruk</item>
+        <item>Anandnagar</item>
+        <item>Aundh</item>
+        <item>Aundh Road</item>
+        <item>Balaji Nagar</item>
+        <item>Baner</item>
+        <item>Baner Road</item>
+        <item>Bhandarkar Road</item>
+        <item>Bhavani Peth</item>
+        <item>Bibvewadi</item>
+        <item>Bopodi</item>
+        <item>Budhwar Peth</item>
+        <item>Bund Garden Road</item>
+        <item>Camp</item>
+        <item>Chandan Nagar</item>
+        <item>Dapodi</item>
+        <item>Deccan Gymkhana</item>
+        <item>Dehu Road</item>
+        <item>Dhankawadi</item>
+        <item>Dhayari Phata</item>
+        <item>Dhole Patil Road</item>
+        <item>Erandwane</item>
+        <item>Fatima Nagar</item>
+        <item>Fergusson College Road</item>
+        <item>Ganesh Peth</item>
+        <item>Ganeshkhind</item>
+        <item>Ghorpade Peth</item>
+        <item>Ghoradi</item>
+        <item>Gokhale Nagar</item>
+        <item>Gultekadi</item>
+        <item>Guruwar Peth</item>
+        <item>Hadapsar</item>
+        <item>Hadapsar Industrial Estate</item>
+        <item>Hingne Khurd</item>
+        <item>Janagali Maharaj Road</item>
+        <item>Kalyani Nagar</item>
+        <item>Karve Nagar</item>
+        <item>Karve Road</item>
+        <item>Kasba Peth</item>
+        <item>Katraj</item>
+        <item>Khadki</item>
+        <item>Kharadi</item>
+        <item>Kondhwa</item>
+        <item>Kondhawa Budruk</item>
+        <item>Kondhawa Khurd</item>
+        <item>Koregaon Park</item>
+        <item>Kothrud</item>
+        <item>Law College Road</item>
+        <item>Laxmi Road</item>
+        <item>Lulla Nagar</item>
+        <item>Mahatma Gandhi Road</item>
+        <item>Mangalwar Peth</item>
+        <item>Manik Bagh</item>
+        <item>Market Yard</item>
+        <item>Model Colony</item>
+        <item>Mukund Nagar</item>
+        <item>Mundhawa</item>
+        <item>Nagar Road</item>
+        <item>Nana Peth</item>
+        <item>Narayan Peth</item>
+        <item>Narayangaon</item>
+        <item>Warje</item>
+        <item>Yerawada</item>
+        <item>Navi Peth</item>
+        <item>Padmavati</item>
+        <item>Parvati Darshan</item>
+        <item>Pashan</item>
+        <item>Paud Road</item>
+        <item>Pirangut</item>
+        <item>Prabhat Road</item>
+        <item>Pune Railway Station</item>
+        <item>Rasta Peth</item>
+        <item>Raviwar Peth</item>
+        <item>Sadashiv Peth</item>
+        <item>Sahakar Nagar</item>
+        <item>Salunke Vihar</item>
+        <item>Sasson Road</item>
+        <item>Satara Road</item>
+        <item>Senapati Bapat Road</item>
+        <item>Shaniwar Peth</item>
+        <item>Shivaji Nagar</item>
+        <item>Shukrawar Peth</item>
+        <item>Sinhagad Road</item>
+        <item>Somwar Peth</item>
+        <item>Swarget</item>
+        <item>Tilak Road</item>
+        <item>Uruli Devachi</item>
+        <item>Vadgaon Budruk</item>
+        <item>Vadgaon Sheri</item>
+        <item>Viman Nagar</item>
+        <item>Vishrant Wadi</item>
+        <item>Wagholi</item>
+        <item>Wakadewadi</item>
+        <item>Wanowrie</item>
+
     </string-array>
 
     <string-array name="blood_groups">

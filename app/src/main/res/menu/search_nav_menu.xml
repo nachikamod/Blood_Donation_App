@@ -2,19 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:title="Under Construction">
-    </item>
-
-    <item android:id="@+id/nav_area"
-        android:title="Area"
-        android:icon="@drawable/ic_locality"
+    <item android:id="@+id/nav_home"
+        android:title="HOME"
+        android:icon="@drawable/ic_home"
         app:showAsAction="never">
     </item>
 
-    <item android:id="@+id/nav_registered_donor"
-        android:title="Blood Group"
-        android:icon="@drawable/ic_drop"
+    <item android:id="@+id/nav_filter"
+        android:title="FILTER"
+        android:icon="@drawable/ic_filter"
         app:showAsAction="never">
     </item>
 
