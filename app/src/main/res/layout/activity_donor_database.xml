@@ -296,7 +296,7 @@
                         android:ems="10"
                         android:gravity="start|top"
                         android:inputType="textMultiLine"
-                        android:hint="Write an paragraph"/>
+                        android:hint="Mention Diseases If Any"/>
 
                     <TextView
                         android:layout_below="@+id/medical_history_input"
