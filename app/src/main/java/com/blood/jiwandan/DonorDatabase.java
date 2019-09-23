@@ -173,7 +173,7 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 pushData.put("query_1", state + "_" + city + "_" + area);
                 pushData.put("query_2", state + "_" + city);
                 pushData.put("query_3", state + "_" + city + "_" + area + "_" + bloodGroup);
-                pushData.put("query_4", );
+                pushData.put("query_4", area  + "_" + bloodGroup);
 
                 key = rootRef.push().getKey();
                 //Toast.makeText(DonorDatabase.this, "key is-"+key, Toast.LENGTH_SHORT).show();
