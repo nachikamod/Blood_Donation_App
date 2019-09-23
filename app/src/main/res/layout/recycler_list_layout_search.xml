@@ -83,6 +83,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:id="@+id/emailRecycler"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/email_ref"
@@ -104,16 +105,17 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:id="@+id/address_ref"
+                android:id="@+id/state_ref"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address : "/>
+                android:text="Sate : "/>
 
             <TextView
+                android:id="@+id/stateRecycler"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
-                android:text="address here"
-                android:layout_toEndOf="@+id/address_ref"
+                android:text="state here"
+                android:layout_toEndOf="@+id/state_ref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -123,6 +125,60 @@
             android:padding="10dp"
             android:id="@+id/recycler_five"
             android:layout_below="@+id/recycler_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:id="@+id/city_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City : "/>
+
+            <TextView
+                android:id="@+id/cityRecycler"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:text="City here"
+                android:layout_toEndOf="@+id/city_ref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:id="@+id/recycler_six"
+            android:layout_below="@+id/recycler_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:id="@+id/area_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Area : "/>
+
+            <TextView
+                android:id="@+id/areaRecycler"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:text="Area here"
+                android:layout_toEndOf="@+id/area_ref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:id="@+id/recycler_seven"
+            android:layout_below="@+id/recycler_six"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -143,37 +199,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Blood"/>
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/recycler_six"
-            android:padding="10dp"
-            android:layout_below="@+id/recycler_five"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_centerVertical="true"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:id="@+id/city_ref"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="City : ">
-
-            </TextView>
-
-            <TextView
-                android:textColor="@color/white"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/city_ref"
-                android:layout_centerVertical="true"
-                android:id="@+id/cityRecycler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="City" />
 
         </RelativeLayout>
 

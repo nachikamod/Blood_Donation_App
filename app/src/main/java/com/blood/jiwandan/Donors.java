@@ -2,18 +2,34 @@ package com.blood.jiwandan;
 
 public class Donors {
 
-    public String address, bloodGroup, city, contact, email, medicalHistory, name, pincode;
+    public String age, area, bDay, bloodGroup, city, contact, email, lastDonation, medicalHistory, name, state;
 
     public Donors(){
 
     }
 
-    public String getAddress() {
-        return address;
+    public String getAge() {
+        return age;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getbDay() {
+        return bDay;
+    }
+
+    public void setbDay(String bDay) {
+        this.bDay = bDay;
     }
 
     public String getBloodGroup() {
@@ -48,6 +64,14 @@ public class Donors {
         this.email = email;
     }
 
+    public String getLastDonation() {
+        return lastDonation;
+    }
+
+    public void setLastDonation(String lastDonation) {
+        this.lastDonation = lastDonation;
+    }
+
     public String getMedicalHistory() {
         return medicalHistory;
     }
@@ -64,11 +88,11 @@ public class Donors {
         this.name = name;
     }
 
-    public String getPincode() {
-        return pincode;
+    public String getState() {
+        return state;
     }
 
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
+    public void setState(String state) {
+        this.state = state;
     }
 }

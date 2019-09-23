@@ -74,8 +74,6 @@ public class DocumentationActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void initialize() {
