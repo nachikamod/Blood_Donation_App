@@ -9,10 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".logInActivity"></activity>
-        <activity android:name=".TestSearchList" />
+        <activity android:name=".filter_groups"></activity>
+        <activity
+            android:name=".TestSearchList"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DocumentationActivity" />
         <activity android:name=".ScannerViewActivity" />
+        <activity
+            android:name=".login"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DonorDatabase" />
         <activity
             android:name=".MainActivity"

@@ -9,19 +9,17 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -58,6 +56,8 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
     private NavigationView navigationView;
 
     private DatabaseReference rootRef;
+
+    private ProgressDialog loadingBar;
 
     private View mView;
     private AlertDialog.Builder builder;
@@ -146,6 +146,12 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
 
+
+                loadingBar.setTitle("Uploading Data");
+                loadingBar.setMessage("Please wait,uploading...");
+                loadingBar.setCanceledOnTouchOutside(false);
+                loadingBar.show();
+
                 //Combining the full name
                 String fullName = firstName.getText().toString() + " " + lastName.getText().toString();
                 Toast.makeText(DonorDatabase.this, "" + bloodGroup, Toast.LENGTH_SHORT).show();
@@ -170,10 +176,12 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 pushData.put("medicalHistory", medicalHistory.getText().toString().toUpperCase());
                 pushData.put("lastDonation", lastDonation);
 
-                pushData.put("query_1", state + "_" + city + "_" + area);
-                pushData.put("query_2", state + "_" + city);
+                pushData.put("query_1", state + "_" + bloodGroup);
+                pushData.put("query_2", state + "_" + city + "_" + bloodGroup);
                 pushData.put("query_3", state + "_" + city + "_" + area + "_" + bloodGroup);
-                pushData.put("query_4", area  + "_" + bloodGroup);
+                pushData.put("query_4", state + "_" + city + "_" + area);
+                pushData.put("query_5", state + "_" + city);
+                pushData.put("query_6", area  + "_" + bloodGroup);
 
                 key = rootRef.push().getKey();
                 //Toast.makeText(DonorDatabase.this, "key is-"+key, Toast.LENGTH_SHORT).show();
@@ -181,6 +189,8 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isComplete()){
+
+                            loadingBar.dismiss();
 
                             //Initialization of custom pop up fields
 
@@ -230,8 +240,6 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                                 @Override
                                 public void onClick(View view) {
                                     dialog.dismiss();
-                                    Intent testSearch = new Intent(DonorDatabase.this, TestSearchList.class);
-                                    startActivity(testSearch);
                                 }
                             });
 
@@ -304,8 +312,6 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
     private void editTextFocusListeners() {
 
@@ -412,6 +418,8 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         navigationView = (NavigationView) findViewById(R.id.nav_container);
         navigationView.setNavigationItemSelectedListener(this);
 
+        loadingBar = new ProgressDialog(this);
+
     }
 
     private void spinnerInitializer() {
@@ -457,8 +465,8 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
         switch (item.getItemId()) {
 
             case R.id.nav_account_login:{
-                //Intent test = new Intent(DonorDatabase.this, logInActivity.class);
-                //startActivity(test);
+                Intent searchList = new Intent(DonorDatabase.this, TestSearchList.class);
+                startActivity(searchList);
                 break;
             }
             case R.id.nav_registered_donor:{

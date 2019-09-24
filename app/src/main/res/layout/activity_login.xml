@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login"
+    android:background="@color/colorAccent">
+
+    <RelativeLayout
+        android:layout_marginHorizontal="20dp"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:text="MY HOSPITAL"
+            android:id="@+id/welcome_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <EditText
+            android:textColor="@color/white"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/welcome_msg"
+            android:padding="10dp"
+            android:hint="Email"
+            android:textColorHint="@color/white"
+            android:id="@+id/email_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:background="@drawable/custom_user_button"
+            android:inputType="textEmailAddress"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:hint="Password"
+            android:textColorHint="@color/white"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/email_ip"
+            android:id="@+id/psw_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:background="@drawable/custom_user_button"
+            android:inputType="textPassword" />
+
+        <Button
+            android:textColor="@color/white"
+            android:background="@drawable/custom_user_button"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/psw_ip"
+            android:id="@+id/login_acc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+    </RelativeLayout>
+
+  
+
+</RelativeLayout>

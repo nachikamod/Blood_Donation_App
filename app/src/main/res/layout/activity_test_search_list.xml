@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TestSearchList">
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:background="@color/colorPrimary"
+            android:id="@+id/nav_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:background="@color/colorPrimary"
-                android:id="@+id/nav_bar"
+            <EditText
+                android:layout_margin="8dp"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:padding="15dp"
+                android:background="@drawable/custom_user_button"
+                android:layout_toStartOf="@+id/searchClick"
+                android:id="@+id/search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="NAME" />
 
-                <EditText
-                    android:layout_margin="8dp"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"
-                    android:padding="15dp"
-                    android:background="@drawable/custom_user_button"
-                    android:layout_toStartOf="@+id/searchClick"
-                    android:id="@+id/search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="NAME" />
-
-                <ImageView
-                    android:paddingHorizontal="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:id="@+id/searchClick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_search" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_below="@+id/nav_bar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_below="@+id/nav_bar"
-                    android:id="@+id/testRecycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-
-            </RelativeLayout>
+            <ImageView
+                android:paddingHorizontal="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/searchClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_search" />
 
         </RelativeLayout>
 
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_above="@+id/bottom_nav_bar"
+            android:layout_below="@+id/nav_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_query_container"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/search_nav_menu"
-        android:layout_gravity="start"
-        android:background="@color/colorAccent"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/white"
-        >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/testRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-    </com.google.android.material.navigation.NavigationView>
+        </RelativeLayout>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav_bar"
+            android:background="#FF253647"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:menu="@menu/search_nav_menu"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+</RelativeLayout>
