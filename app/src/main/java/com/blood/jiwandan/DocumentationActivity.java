@@ -2,6 +2,7 @@ package com.blood.jiwandan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -61,16 +62,25 @@ public class DocumentationActivity extends AppCompatActivity {
                 medicalHistory.setText(mHistory);
                 lastDonation.setText(lastDonated);
 
-
-
-
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        updateData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sudoReff.child("name").setValue(firstName);
+                sudoReff.child("contact").setValue(mobileNumber);
+                sudoReff.child("email").setValue(emailId);
+                sudoReff.child("state").setValue(pincode);
+                sudoReff.child("city").setValue(city);
+                sudoReff.child("bDay").setValue(age);
+                sudoReff.child("medicalHistory").setValue(medicalHistory);
+                sudoReff.child("lastDonation").setValue(lastDonation);
             }
         });
 
