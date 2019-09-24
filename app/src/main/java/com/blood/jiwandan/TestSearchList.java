@@ -31,6 +31,8 @@ public class TestSearchList extends AppCompatActivity implements BottomNavigatio
     private EditText searchField;
     private ImageView mImageView;
 
+    private String temp;
+
     private RecyclerView mResultList;
 
     private DatabaseReference donorsRef;
@@ -38,9 +40,9 @@ public class TestSearchList extends AppCompatActivity implements BottomNavigatio
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    private Query querry1;
+    private Query query1, query2;
 
-    private String searchedText;
+    private String searchedText, searchable;
 
     private BottomNavigationView bottomBar;
 
@@ -53,6 +55,15 @@ public class TestSearchList extends AppCompatActivity implements BottomNavigatio
         currentUser = mAuth.getCurrentUser();
 
         donorsRef = FirebaseDatabase.getInstance().getReference().child("donors");
+
+        try {
+            searchable = getIntent().getExtras().get("temp_filter").toString();
+            //Toast.makeText(this, "" + searchable, Toast.LENGTH_SHORT).show();
+        }
+        catch (NullPointerException e) {
+            //Toast.makeText(this, "" + e, Toast.LENGTH_SHORT).show();
+        }
+
 
         initializeFields();
 
@@ -101,22 +112,69 @@ public class TestSearchList extends AppCompatActivity implements BottomNavigatio
                             }
                         };
 
+
                 mResultList.setAdapter(adapter);
                 adapter.startListening();
 
             }
+
+            if (searchable != null && searchedText == null) {
+                firebaseDonorSearchQueryTemp_2();
+            }
+
 
             mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     searchedText = searchField.getText().toString();
-                    firebaseDonorSearch(searchedText);
+                    firebaseDonorSearchQueryTemp_1(searchedText);
 
                 }
             });
 
+
+
         }
+
+
+    }
+
+    private void firebaseDonorSearchQueryTemp_2() {
+
+        query2 = donorsRef.orderByChild("query_6").startAt(searchable).endAt(searchable + "\uf8ff");
+
+
+        FirebaseRecyclerOptions<Donors> options =
+                new FirebaseRecyclerOptions.Builder<Donors>()
+                        .setQuery(query2, Donors.class)
+                        .build();
+        FirebaseRecyclerAdapter<Donors, DonorsViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Donors, DonorsViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull final DonorsViewHolder holder, final int position, @NonNull final Donors model) {
+
+                        holder.donorName.setText(model.getName());
+                        holder.donorContact.setText(model.getContact());
+                        holder.donorEmail.setText(model.getEmail());
+                        holder.donorState.setText(model.getState());
+                        holder.donorCity.setText(model.getCity());
+                        holder.donorArea.setText(model.getArea());
+                        holder.donorBloodGroup.setText(model.getBloodGroup());
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public DonorsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_list_layout_search, viewGroup, false);
+                        DonorsViewHolder viewHolder = new DonorsViewHolder(view);
+                        return viewHolder;
+                    }
+                };
+
+        mResultList.setAdapter(adapter);
+        adapter.startListening();
 
 
     }
@@ -129,14 +187,14 @@ public class TestSearchList extends AppCompatActivity implements BottomNavigatio
 
     }
 
-    private void firebaseDonorSearch(String search) {
+    private void firebaseDonorSearchQueryTemp_1(String search) {
 
-        querry1 = donorsRef.orderByChild("query_6").startAt(search).endAt(search + "\uf8ff");
+        query1 = donorsRef.orderByChild("bloodGroup").startAt(search).endAt(search + "\uf8ff");
 
 
         FirebaseRecyclerOptions<Donors> options =
                 new FirebaseRecyclerOptions.Builder<Donors>()
-                        .setQuery(querry1, Donors.class)
+                        .setQuery(query1, Donors.class)
                         .build();
         FirebaseRecyclerAdapter<Donors, DonorsViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Donors, DonorsViewHolder>(options) {
@@ -191,7 +249,9 @@ public class TestSearchList extends AppCompatActivity implements BottomNavigatio
                 return true;
             }
             case  R.id.nav_filter:{
-
+                Intent filterSearch = new Intent(TestSearchList.this, filter_groups.class);
+                startActivity(filterSearch);
+                return true;
             }
 
         }

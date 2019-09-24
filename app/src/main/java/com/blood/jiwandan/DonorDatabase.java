@@ -240,8 +240,6 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                                 @Override
                                 public void onClick(View view) {
                                     dialog.dismiss();
-                                    Intent testSearch = new Intent(DonorDatabase.this, TestSearchList.class);
-                                    startActivity(testSearch);
                                 }
                             });
 
