@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 },
-                5000
+                3000
         );
 
 
