@@ -169,19 +169,19 @@ public class DonorDatabase extends AppCompatActivity implements AdapterView.OnIt
                 pushData.put("email", emailId.getText().toString());
                 pushData.put("state", state.toUpperCase());
                 pushData.put("city", city.toUpperCase());
-                pushData.put("area", area);
+                pushData.put("area", area.toUpperCase());
                 pushData.put("bloodGroup", bloodGroup);
                 pushData.put("bDay", bDaySetter);
                 pushData.put("age", currAgeString);
                 pushData.put("medicalHistory", medicalHistory.getText().toString().toUpperCase());
                 pushData.put("lastDonation", lastDonation);
 
-                pushData.put("query_1", state + "_" + bloodGroup);
-                pushData.put("query_2", state + "_" + city + "_" + bloodGroup);
-                pushData.put("query_3", state + "_" + city + "_" + area + "_" + bloodGroup);
-                pushData.put("query_4", state + "_" + city + "_" + area);
-                pushData.put("query_5", state + "_" + city);
-                pushData.put("query_6", area  + "_" + bloodGroup);
+                pushData.put("query_1", state.toUpperCase() + "_" + bloodGroup);
+                pushData.put("query_2", state.toUpperCase() + "_" + city.toUpperCase() + "_" + bloodGroup);
+                pushData.put("query_3", state.toUpperCase() + "_" + city.toUpperCase() + "_" + area.toUpperCase() + "_" + bloodGroup);
+                pushData.put("query_4", state.toUpperCase() + "_" + city.toUpperCase() + "_" + area.toUpperCase());
+                pushData.put("query_5", state.toUpperCase() + "_" + city.toUpperCase());
+                pushData.put("query_6", area.toUpperCase()  + "_" + bloodGroup);
 
                 key = rootRef.push().getKey();
                 //Toast.makeText(DonorDatabase.this, "key is-"+key, Toast.LENGTH_SHORT).show();

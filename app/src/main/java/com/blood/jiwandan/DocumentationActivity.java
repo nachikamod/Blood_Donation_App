@@ -3,11 +3,13 @@ package com.blood.jiwandan;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,25 +48,34 @@ public class DocumentationActivity extends AppCompatActivity {
         sudoReff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String Name=dataSnapshot.child("name").getValue().toString();
-                String contact=dataSnapshot.child("contact").getValue().toString();
-                String eMail=dataSnapshot.child("email").getValue().toString();
-                String state=dataSnapshot.child("state").getValue().toString();
-                String City=dataSnapshot.child("city").getValue().toString();
-                String bldgrp=dataSnapshot.child("bloodGroup").getValue().toString();
-                String bday=dataSnapshot.child("bDay").getValue().toString();
-                String mHistory=dataSnapshot.child("medicalHistory").getValue().toString();
-                String lastDonated=dataSnapshot.child("lastDonation").getValue().toString();
+                try {
 
-                firstName.setText(Name);
-                mobileNumber.setText(contact);
-                emailId.setText(eMail);
-                city.setText(City);
-                pincode.setText(state);
-                bloodGrp.setText(bldgrp);
-                age.setText(bday);
-                medicalHistory.setText(mHistory);
-                lastDonation.setText(lastDonated);
+                    String Name=dataSnapshot.child("name").getValue().toString();
+                    String contact=dataSnapshot.child("contact").getValue().toString();
+                    String eMail=dataSnapshot.child("email").getValue().toString();
+                    String state=dataSnapshot.child("state").getValue().toString();
+                    String City=dataSnapshot.child("city").getValue().toString();
+                    String bldgrp=dataSnapshot.child("bloodGroup").getValue().toString();
+                    String bday=dataSnapshot.child("bDay").getValue().toString();
+                    String mHistory=dataSnapshot.child("medicalHistory").getValue().toString();
+                    String lastDonated=dataSnapshot.child("lastDonation").getValue().toString();
+
+                    firstName.setText(Name);
+                    mobileNumber.setText(contact);
+                    emailId.setText(eMail);
+                    city.setText(City);
+                    pincode.setText(state);
+                    bloodGrp.setText(bldgrp);
+                    age.setText(bday);
+                    medicalHistory.setText(mHistory);
+                    lastDonation.setText(lastDonated);
+
+                }
+                catch (NullPointerException e) {
+                    Toast.makeText(DocumentationActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                }
+
+
 
 
             }
@@ -83,14 +94,14 @@ public class DocumentationActivity extends AppCompatActivity {
                 uploadDialog.show();
 
 
-                sudoReff.child("name").setValue(firstName.getText().toString());
+                sudoReff.child("name").setValue(firstName.getText().toString().toUpperCase());
                 sudoReff.child("contact").setValue(mobileNumber.getText().toString());
                 sudoReff.child("email").setValue(emailId.getText().toString());
-                sudoReff.child("state").setValue(pincode.getText().toString());
-                sudoReff.child("city").setValue(city.getText().toString());
+                sudoReff.child("state").setValue(pincode.getText().toString().toUpperCase());
+                sudoReff.child("city").setValue(city.getText().toString().toUpperCase());
                 sudoReff.child("bDay").setValue(age.getText().toString());
                 //sudoReff.child("bloodGroup").setValue(bloodGrp);
-                sudoReff.child("medicalHistory").setValue(medicalHistory.getText().toString());
+                sudoReff.child("medicalHistory").setValue(medicalHistory.getText().toString().toUpperCase());
                 sudoReff.child("lastDonation").setValue(lastDonation.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

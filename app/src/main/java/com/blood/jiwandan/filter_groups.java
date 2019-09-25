@@ -27,7 +27,7 @@ public class filter_groups extends AppCompatActivity implements AdapterView.OnIt
             public void onClick(View view) {
 
                 Intent searchView = new Intent(filter_groups.this, TestSearchList.class);
-                searchView.putExtra("temp_filter", area + "_" + bloodGrp);
+                searchView.putExtra("temp_filter", area.toUpperCase() + "_" + bloodGrp.toUpperCase());
                 startActivity(searchView);
 
             }
